@@ -1,0 +1,119 @@
+*apx.txt*  ApX Language Support for Neovim
+
+Author:  Stack Ape Academy
+License: MIT
+
+==============================================================================
+CONTENTS                                                         *apx-contents*
+
+  1. Introduction ......................................... |apx-introduction|
+  2. Installation ......................................... |apx-installation|
+  3. Configuration ........................................ |apx-configuration|
+  4. Commands ............................................. |apx-commands|
+  5. Keymaps .............................................. |apx-keymaps|
+  6. Syntax Highlighting .................................. |apx-syntax|
+
+==============================================================================
+1. INTRODUCTION                                              *apx-introduction*
+
+apx.nvim provides syntax highlighting, file detection, and integration for
+the ApX shell language used in Apex PDE.
+
+Features:
+- Syntax highlighting for ApX scripts
+- File detection for .apx, .apxrc, and apx.profile
+- Commands to run ApX code from Neovim
+- Configurable keymaps
+
+==============================================================================
+2. INSTALLATION                                              *apx-installation*
+
+Using lazy.nvim: >lua
+  {
+    "apex-pde/apx.nvim",
+    ft = "apx",
+    opts = {},
+  }
+<
+
+Using packer.nvim: >lua
+  use {
+    "apex-pde/apx.nvim",
+    config = function()
+      require("apx").setup()
+    end,
+  }
+<
+
+Using vim-plug: >vim
+  Plug 'apex-pde/apx.nvim'
+<
+
+==============================================================================
+3. CONFIGURATION                                            *apx-configuration*
+
+Call the setup function with your options: >lua
+
+  require("apx").setup({
+    -- Path to apx executable (nil = use PATH)
+    apx_path = nil,
+
+    -- Keymaps (set to false to disable all)
+    keymaps = {
+      run_file = "<leader>ar",    -- Run current file
+      run_line = "<leader>al",    -- Run current line
+    },
+  })
+<
+
+To disable keymaps entirely: >lua
+
+  require("apx").setup({
+    keymaps = false,
+  })
+<
+
+==============================================================================
+4. COMMANDS                                                      *apx-commands*
+
+                                                                      *:ApxRun*
+:ApxRun                 Run the current ApX file in a terminal split.
+
+                                                                  *:ApxRunLine*
+:ApxRunLine             Execute the current line as ApX code.
+
+                                                                     *:ApxEval*
+:ApxEval {expr}         Evaluate an ApX expression.
+                        Example: `:ApxEval echo "Hello"`
+
+==============================================================================
+5. KEYMAPS                                                        *apx-keymaps*
+
+Default keymaps (only active in ApX files):
+
+  <leader>ar            Run current file (|:ApxRun|)
+  <leader>al            Run current line (|:ApxRunLine|)
+
+Keymaps can be customized or disabled via |apx-configuration|.
+
+==============================================================================
+6. SYNTAX HIGHLIGHTING                                             *apx-syntax*
+
+The following elements are highlighted:
+
+  - Keywords: if, else, for, while, in, macro, alias, return, break, continue
+  - Booleans: true, false
+  - Null: null
+  - Commands: echo, ls, cd, git-status, ai.ask, etc.
+  - Variables: $name, $it, $env.VAR
+  - Strings: "double quoted" with escape sequences
+  - Numbers: integers and floats
+  - Ranges: 1..10
+  - Operators: |, +, -, *, /, ==, !=, <, >, &&, ||
+  - Comments: # line comments
+  - Flags: --long-flag, -s
+  - Records: {key: value}
+  - Lists: [a, b, c]
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
